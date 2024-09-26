@@ -1,6 +1,14 @@
 import express from "express";
-
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+dotenv.config();
 const app = express();
+
+mongoose.connect(process.env.MONGODB_URI);
+
+mongoose.connection.on("connected", () => {
+  console.log("Connected to MongoDB ", mongoose.connection.name);
+});
 
 app.get("/", async (req, res) => {
   res.render("index.ejs");
